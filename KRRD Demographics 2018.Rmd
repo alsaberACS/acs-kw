@@ -3,6 +3,8 @@ title: "KRRD Demographics 2018"
 author: "Ahmed Al-Saber"
 date: "19 May 2018"
 output: html_document
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r setup, include=FALSE}
@@ -15,8 +17,18 @@ This is an R Markdown document. Markdown is a simple formatting syntax for autho
 
 When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
 
-```{r cars}
-summary(cars)
+```{r KRRD_ALL}
+library(readr)
+KRRD_ALL <- read_delim("KRRD ALL.csv", "\t", 
+    escape_double = FALSE, trim_ws = TRUE)
+
+subset(KRRD_ALL, select=c("Hospital","Gender","Nationality","BMI"))
+library(epiDisplay)
+library(summarytools)
+tab1(KRRD_ALL$Gender, sort.group = "decreasing", cum.percent = TRUE)
+summarytools::freq(KRRD_ALL$Gender, sort.group = "decreasing", order = "freq")
+
+
 ```
 
 ## Including Plots
